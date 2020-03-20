@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Dolphin
+from .models import Dolphin, Ocean
 from .forms import FeedingForm
 # Create your views here.
 
@@ -29,8 +29,13 @@ def dolphins_index(request):
 
 def dolphins_detail(request, dolphin_id):
   dolphin = Dolphin.objects.get(id=dolphin_id)
+  oceans_dolphin_doesnt_have = Ocean.objects.exclude(id__in = dolphin.oceans.all().values_list('id'))
   feeding_form = FeedingForm()
-  return render(request, 'dolphins/detail.html', {'dolphin': dolphin, 'feeding_form': feeding_form})
+  return render(request, 'dolphins/detail.html', {
+    'dolphin': dolphin, 
+    'feeding_form': feeding_form,
+    'oceans': oceans_dolphin_doesnt_have
+    })
 
 def add_feeding(request, dolphin_id):
   # create the ModelForm using the data in request.POST
@@ -42,4 +47,9 @@ def add_feeding(request, dolphin_id):
     new_feeding = form.save(commit=False)
     new_feeding.dolphin_id = dolphin_id
     new_feeding.save()
+  return redirect('detail', dolphin_id=dolphin_id)
+
+def assoc_ocean(request, dolphin_id, ocean_id):
+  # Note that you can pass a toy's id instead of the whole object
+  Dolphin.objects.get(id=dolphin_id).oceans.add(ocean_id)
   return redirect('detail', dolphin_id=dolphin_id)
