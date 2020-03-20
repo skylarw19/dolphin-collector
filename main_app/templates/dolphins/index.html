@@ -5,16 +5,18 @@
 
 {% for dolphin in dolphins %}
   <div class="card">
-    <div class="card-content">
-      <span class="card-title">{{ dolphin.name }}</span>
-      <p>Breed: {{ dolphin.breed }}</p>
-      <p>Description: {{ dolphin.description }}</p>
-      {% if dolphin.age > 0 %}
-        <p>Age: {{ dolphin.age }}</p>
-      {% else %}
-        <p>Age: Baby</p>
-      {% endif %}
-    </div>
+    <a href="{% url 'detail' dolphin.id %}">
+      <div class="card-content">
+        <span class="card-title">{{ dolphin.name }}</span>
+        <p>Breed: {{ dolphin.breed }}</p>
+        <p>Description: {{ dolphin.description }}</p>
+        {% if dolphin.age > 0 %}
+          <p>Age: {{ dolphin.age }}</p>
+        {% else %}
+          <p>Age: Baby</p>
+        {% endif %}
+      </div>
+    </a>
   </div>
 {% endfor %}
 

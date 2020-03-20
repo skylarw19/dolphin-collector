@@ -12,3 +12,7 @@ def about(request):
 def dolphins_index(request):
   dolphins = Dolphin.objects.all()
   return render(request, 'dolphins/index.html', { 'dolphins': dolphins })
+
+def dolphins_detail(request, dolphin_id):
+  dolphin = Dolphin.objects.get(id=dolphin_id)
+  return render(request, 'dolphins/detail.html', {'dolphin': dolphin})
