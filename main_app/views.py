@@ -1,7 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.generic.edit import CreateView
 from .models import Dolphin
 # Create your views here.
+
+class DolphinCreate(CreateView):
+  model = Dolphin
+  fields = '__all__'
 
 def home(request):
     return HttpResponse('<h1>Hello World</h1>')
