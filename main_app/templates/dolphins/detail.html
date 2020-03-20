@@ -3,21 +3,39 @@
 
 <h1>Dolphin Details</h1>
 
-<div class="card">
-  <div class="card-content">
-    <span class="card-title">{{ dolphin.name }}</span>
-    <p>Breed: {{ dolphin.breed }}</p>
-    <p>Description: {{ dolphin.description }}</p>
-    {% if dolphin.age > 0 %}
-      <p>Age: {{ dolphin.age }}</p>
-    {% else %}
-      <p>Age: baby</p>
-    {% endif %}
+<div class="row">
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ dolphin.name }}</span>
+        <p>Breed: {{ dolphin.breed }}</p>
+        <p>Description: {{ dolphin.description }}</p>
+        {% if dolphin.age > 0 %}
+          <p>Age: {{ dolphin.age }}</p>
+        {% else %}
+          <p>Age: Baby</p>
+        {% endif %}
+      </div>
+      <div class="card-action">
+        <a href="{% url 'dolphins_update' dolphin.id %}">Edit</a>
+        <a href="{% url 'dolphins_delete' dolphin.id %}">Delete</a>
+      </div>
+    </div>
   </div>
-  <div class="card-action">
-    <a href="{% url 'dolphins_update' dolphin.id %}">Edit</a>
-    <a href="{% url 'dolphins_delete' dolphin.id %}">Delete</a>
+  <div class="col s6">
+    <table class="striped">
+      <thead>
+        <tr><th>Date</th><th>Meal</th></tr>
+      </thead>
+      <tbody>
+        {% for feeding in dolphin.feeding_set.all %}
+          <tr>
+            <td>{{feeding.date}}</td>
+            <td>{{feeding.get_meal_display}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 </div>
-
 {% endblock %}
