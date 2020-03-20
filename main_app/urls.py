@@ -9,4 +9,5 @@ urlpatterns = [
     path('dolphins/create/', views.DolphinCreate.as_view(), name='dolphins_create'),
     path('dolphins/<int:pk>/update/', views.DolphinUpdate.as_view(), name='dolphins_update'),
     path('dolphins/<int:pk>/delete/', views.DolphinDelete.as_view(), name='dolphins_delete'),
+    path('dolphins/<int:dolphin_id>/add_feeding/', views.add_feeding, name='add_feeding'),
 ]
